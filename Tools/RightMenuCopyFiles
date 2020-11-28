@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Folder\shell\DeleteSVN]
+@="Delete SVN Folders"
+
+[HKEY_CLASSES_ROOT\Folder\shell\DeleteSVN\command]
+@="cmd.exe /c \"TITLE Removing SVN Folders in %1 && FOR /r \"%1\" %%f IN (.svn) DO RD /s /q \"%%f\" \""
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Folder\shell\GETEVIDENCE\command]
+@="cmd.exe /c \"xcopy /E /I D:\\xxx\\LOG\\DEBUG \"%1\"\\DEBUG && move C:\\mail\\EVIDENCE\\*.jpg \"%1\" \""
+
+Windows Registry Editor Version 5.00
+
+[-HKEY_CLASSES_ROOT\Folder\shell\GETEVIDENCE]
