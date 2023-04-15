@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+
+body
+{
+color: #0f3c4b;
+background-color: #e5edf1;
+padding: 5rem 1.25rem; /* 80 20 */
+
+text-align: center;
+}
+
+.container h1
+{
+font-size: 42px;
+font-weight: 300;
+color: #0f3c4b;
+margin-bottom: 40px;
+}
+
+.container h1 a:hover,
+.container h1 a:focus
+{
+color: #39bfd3;
+}
+
+.upload-form
+{
+width: 100%;
+max-width: 680px; /* 800 */
+text-align: center;
+margin: 0 auto;
+font-size: 1.25rem; /* 20 */
+background-color: #c8dadf;
+position: relative;
+padding: 100px 20px;
+outline: 2px dashed #92b0b3;
+outline-offset: -10px;
+
+-webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+transition: outline-offset .15s ease-in-out, background-color .15s linear;
+}
+				
+.upload-form.is-dragover
+{
+outline-offset: -20px;
+outline-color: #c8dadf;
+background-color: #fff;
+}
+
+.upload-form .upload-icon
+{
+width: 100%;
+height: 80px;
+fill: #92b0b3;
+display: block;
+margin-bottom: 40px;
+}
+
+.upload-input-file
+{
+width: 0.1px;
+height: 0.1px;
+opacity: 0;
+overflow: hidden;
+position: absolute;
+z-index: -1;
+}
+.upload-input-file + label
+{
+max-width: 80%;
+text-overflow: ellipsis;
+white-space: nowrap;
+cursor: pointer;
+display: inline-block;
+overflow: hidden;
+}
+.upload-input-file + label:hover strong,
+.upload-input-file:focus + label strong,
+.upload-input-file.has-focus + label strong
+{
+color: #39bfd3;
+}
+.upload-input-file:focus + label,
+.upload-input-file.has-focus + label
+{
+outline: 1px dotted #000;
+outline: -webkit-focus-ring-color auto 5px;
+}
+
+
+.progressBar {
+    width: 200px;
+    height: 22px;
+    border: 1px solid #ddd;
+    border-radius: 5px; 
+    overflow: hidden;
+    display:inline-block;
+    margin:0px 10px 5px 5px;
+    vertical-align:top;
+}
+  
+.progressBar div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #0ba1b5; border-radius: 3px; 
+}
+.statusbar
+{
+    border-top:1px solid #A9CCD1;
+    min-height:25px;
+    /*width:700px;*/
+    padding:10px 10px 0px 10px;
+    vertical-align:top;
+}
+.statusbar:nth-child(odd){
+    background:#EBEFF0;
+}
+.fileview
+{
+display:inline-block;
+vertical-align:top;
+}
+.filename
+{
+display:inline-block;
+vertical-align:top;
+width:250px;
+}
+.filesize
+{
+display:inline-block;
+vertical-align:top;
+color:#30693D;
+width:100px;
+margin-left:10px;
+margin-right:5px;
+}
+.abort{
+    background-color:#A8352F;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;display:inline-block;
+    color:#fff;
+    font-family:arial;font-size:13px;font-weight:normal;
+    padding:4px 15px;
+    cursor:pointer;
+    vertical-align:top
+    }
+    
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+.thumbnail{
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 2px solid lightgray;
+    border-radius: 3px;
+    float: left;
+}
+	</style>
+    <title>drawdrop</title>
+  </head>
+  <body>
+    <div class="container">
+    
+<form method="post" action="" enctype="multipart/form-data" class="mb-3 upload-form">
+<div class="upload-div">
+<svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43">
+<path d="M23,26.414q-.032.028-.062.059l-7.23,7.234a1,1,0,0,1-1.415-1.414l7.23-7.234a3.5,3.5,0,0,1,4.947,0l7.236,7.217a1,1,0,0,1-1.412,1.416l-7.236-7.217L25,26.417V45a1,1,0,0,1-2,0ZM35.671,16.08A11.008,11.008,0,0,1,48,27v.664A12,12,0,0,1,37.112,39.613a1,1,0,0,1-.184-1.992A10,10,0,0,0,46,27.664V27a9.009,9.009,0,0,0-10.918-8.8,1,1,0,0,1-1.2-.831A11,11,0,0,0,12,19.055a1,1,0,0,1-1.11.994A8.1,8.1,0,0,0,10,20a8,8,0,0,0-8,8,9.645,9.645,0,0,0,9.157,9.631,1,1,0,0,1-.1,2A11.645,11.645,0,0,1,0,28,10,10,0,0,1,10,18a13.024,13.024,0,0,1,25.671-1.92Z" />
+</svg>
+<input type="file" name="files[]" id="file" class="upload-input-file" data-multiple-caption="{count} files selected" multiple />
+<label for="file"><strong>Choose a file</strong> or drag it here.</label>
+</div>
+</form>
+
+<br><br>
+<div id="status1"></div>
+	</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+
+function sendFileToServer(formData,status)
+{
+    var uploadURL ="/admin/register"; //Upload URL
+    var extraData ={}; //Extra Data.
+    var jqXHR=$.ajax({
+            xhr: function() {
+            var xhrobj = $.ajaxSettings.xhr();
+            if (xhrobj.upload) {
+                    xhrobj.upload.addEventListener('progress', function(event) {
+                        var percent = 0;
+                        var position = event.loaded || event.position;
+                        var total = event.total;
+                        if (event.lengthComputable) {
+                            percent = Math.ceil(position / total * 100);
+                        }
+                        //Set progress
+                        status.setProgress(percent);
+                    }, false);
+                }
+            return xhrobj;
+        },
+    url: uploadURL,
+    type: "POST",
+    contentType:false,
+    processData: false,
+        cache: false,
+        data: formData,
+    dataType: 'json',
+        success: function(data){
+            status.setProgress(100);
+  
+            $("#status1").append("File upload Done<br>");         
+        }
+    }); 
+  
+    status.setAbort(jqXHR);
+}
+  
+var rowCount=0;
+function createStatusbar(obj)
+{
+     rowCount++;
+     var row="odd";
+     if(rowCount %2 ==0) row ="even";
+     this.statusbar = $("<div class='statusbar "+row+"'></div>");
+     this.fileview = $("<div class='fileview'></div>").appendTo(this.statusbar);
+     this.filename = $("<div class='filename'></div>").appendTo(this.statusbar);
+     this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
+     this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+     this.abort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
+     obj.after(this.statusbar);
+     
+    this.setFileNameSize = function(fileObj)
+    {
+    
+    var name = escape(fileObj.name);
+    var size = fileObj.size;
+    
+        var sizeStr="";
+        var sizeKB = size/1024;
+        if(parseInt(sizeKB) > 1024)
+        {
+            var sizeMB = sizeKB/1024;
+            sizeStr = sizeMB.toFixed(2)+" MB";
+        }
+        else
+        {
+            sizeStr = sizeKB.toFixed(2)+" KB";
+        }
+  
+        this.filename.html(name);
+        this.size.html(sizeStr);
+        
+        
+        if (fileObj.type.match('image.*')) {
+
+          var reader = new FileReader();
+
+          // Closure to capture the file information.
+          reader.onload = (function(theFile, targetObj) {
+          return function(e) {
+          // Render thumbnail.
+            var fileview = ['<img class="thumbnail" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          targetObj.fileview.html(fileview);
+          };
+          })(fileObj, this);
+
+          // Read in the image file as a data URL.
+          reader.readAsDataURL(fileObj);
+
+        }
+    }
+    this.setProgress = function(progress)
+    {       
+        var progressBarWidth =progress*this.progressBar.width()/ 100;  
+        this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
+        if(parseInt(progress) >= 100)
+        {
+            this.abort.hide();
+        }
+    }
+    this.setAbort = function(jqxhr)
+    {
+        var sb = this.statusbar;
+        this.abort.click(function()
+        {
+            jqxhr.abort();
+            sb.hide();
+        });
+    }
+}
+function handleFileUpload(files,obj)
+{
+   for (var i = 0; i < files.length; i++) 
+   {
+        var fd = new FormData();
+        fd.append('file', files[i]);
+        fd.append('caption', 'hello');
+        fd.append('path', files[i].name.replace(/,/g, '/'));
+  
+        var status = new createStatusbar(obj); //Using this we can set progress.
+        status.setFileNameSize(files[i]);
+        
+
+        sendFileToServer(fd,status);
+  
+   }
+}
+$(document).ready(function()
+{
+$(".upload-form").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) 
+{
+    e.stopPropagation();
+    e.preventDefault();
+})
+.on('dragover dragenter', function (e) 
+{
+    $(this).addClass('is-dragover');
+})
+.on('dragleave dragend drop', function() {
+    $(this).removeClass('is-dragover');
+})
+.on('drop', function (e) 
+{
+     var files = e.originalEvent.dataTransfer.files;
+  
+     //We need to send dropped files to Server
+     handleFileUpload(files, $(this));
+});
+$("html").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) 
+{
+    e.stopPropagation();
+    e.preventDefault();
+});
+
+  $('.upload-input-file').bind('change', function() {
+    if (this.files.length > 0) {
+     handleFileUpload(this.files, $(".upload-form"));
+    }
+  });
+});
+// Bytes conversion
+function convertSize(size) {
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (size == 0) return '0 Byte';
+    var i = parseInt(Math.floor(Math.log(size) / Math.log(1024)));
+    return Math.round(size / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+    </script>
+  </body>
+</html>
